@@ -36,18 +36,14 @@ with open('u.item', encoding='latin_1') as f:
         movie = Movie(row['movie_id'], row['title'])
         movies[movie.id] = movie
 
-# movies_list = [movies[key] for key in movies]
-#
-# user_input = input('Enter part of a movie title: ').lower()
-#
-# for movie in movies_list:
-#     if user_input in movie.title.lower():
-#         print(movie)
-
-# ID = input('Enter a movie ID: ')
-#
-# for movie in movies_list:
-#     print()
+def movie_by_name():
+    movies_list = [movies[key] for key in movies]
+    user_input = input('\nEnter part of a movie title: ').lower()
+    print()
+    for movie in movies_list:
+        if user_input in movie.title.lower():
+            print(movie)
+movie_by_name()
 
 users_list = []
 with open('u.user', encoding='latin_1') as f:
@@ -67,7 +63,6 @@ with open('u.data', encoding='latin_1') as f:
 # for rating in rating_list:
 #     print(rating)
 
-
 def ratings_by_movie_id(ratings, movie_id):
     movie_ratings = []
     for rating in rating_list:
@@ -75,10 +70,10 @@ def ratings_by_movie_id(ratings, movie_id):
             movie_ratings.append(int(rating.rating))
     count = len(movie_ratings)
     average = sum(movie_ratings) / count
-    print('Number of user ratings: ', count)
+    print('\nNumber of user ratings: ', count)
     print('Average rating: ', "%.2f" % average)
     return movie_ratings
 
-movie_id = input('Movie ID: ')
+movie_id = input('\nEnter the movie ID number for the \nmovie you want to see ratings for: ')
 
 id_sorted = ratings_by_movie_id(rating_list, movie_id)
