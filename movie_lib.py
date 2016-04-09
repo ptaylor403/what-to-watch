@@ -36,15 +36,6 @@ with open('u.item', encoding='latin_1') as f:
         movie = Movie(row['movie_id'], row['title'])
         movies[movie.id] = movie
 
-def movie_by_name():
-    movies_list = [movies[key] for key in movies]
-    user_input = input('\nEnter part of a movie title: ').lower()
-    print()
-    for movie in movies_list:
-        if user_input in movie.title.lower():
-            print(movie)
-movie_by_name()
-
 users_list = []
 with open('u.user', encoding='latin_1') as f:
     reader = csv.reader(f, delimiter = '|')
@@ -59,21 +50,53 @@ with open('u.data', encoding='latin_1') as f:
     reader = csv.reader(f, delimiter = '\t')
     for row in reader:
         rating_list.append(Rating(row))
-
+#
 # for rating in rating_list:
 #     print(rating)
 
-def ratings_by_movie_id(ratings, movie_id):
-    movie_ratings = []
-    for rating in rating_list:
-        if movie_id == rating.movie_id:
-            movie_ratings.append(int(rating.rating))
-    count = len(movie_ratings)
-    average = sum(movie_ratings) / count
-    print('\nNumber of user ratings: ', count)
-    print('Average rating: ', "%.2f" % average)
-    return movie_ratings
 
-movie_id = input('\nEnter the movie ID number for the \nmovie you want to see ratings for: ')
 
-id_sorted = ratings_by_movie_id(rating_list, movie_id)
+def main():
+    def movie_by_name():
+        movies_list = [movies[key] for key in movies]
+        user_input = input('\nEnter part of a movie title: ').lower()
+        print()
+        for movie in movies_list:
+            if user_input in movie.title.lower():
+                print(movie)
+
+    movie_by_name()
+
+    def ratings_by_movie_id(ratings, movie_id):
+        movie_ratings = []
+        for rating in rating_list:
+            if movie_id == rating.movie_id:
+                movie_ratings.append(int(rating.rating))
+        count = len(movie_ratings)
+        average = sum(movie_ratings) / count
+        print('\nNumber of user ratings: ', count)
+        print('Average rating: ', "%.2f" % average)
+        return movie_ratings
+
+    movie_id = input('\nEnter the movie ID number for the \nmovie you want to see ratings for: ')
+    # if movie_id not in rating_list:
+    #     print("\nThere is no movie with that ID number. Please try again.")
+    #     movie_id = input('\nEnter the movie ID number for the \nmovie you want to see ratings for: ')
+    #keep loop going somehow
+    id_sorted = ratings_by_movie_id(rating_list, movie_id)
+
+    def ratings_by_user_id(ratings, user_id):
+        users_ratings = []
+        for user in rating_list:
+            if user_id == user.user_id:
+                users_ratings.append((user.movie_id, user.rating))
+                count = len(users_ratings)
+        print('\nlist of ratings by movie id: ')
+        for i in users_ratings:
+            print (movies[i[0]], "== Rating:", i[1])
+        print('\nnumber of ratings by user: ', count)
+        return users_ratings
+
+    user_id = input("\nEnter a user ID: ")
+    users_info = ratings_by_user_id(rating_list, user_id)
+main()
