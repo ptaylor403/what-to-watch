@@ -91,10 +91,10 @@ def main():
             if user_id == user.user_id:
                 users_ratings.append((user.movie_id, user.rating))
                 count = len(users_ratings)
-        print('\nlist of ratings by movie id: ')
+        print('\nList of ratings by movie id: \n')
         for i in users_ratings:
             print (movies[i[0]], "== Rating:", i[1])
-        print('\nnumber of ratings by user: ', count)
+        print('\nNumber of ratings by user: ', count)
         return users_ratings
 
     user_id = input("\nEnter a user ID: ")
